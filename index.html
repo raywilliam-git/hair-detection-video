@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Hair Touch Reminder</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="container">
+        <h1>Hair Touch Reminder</h1>
+
+        <p class="privacy">
+            Your video stays on this device.
+            Nothing is recorded or uploaded.
+        </p>
+
+        <div class="status">
+            <span id="statusDot" class="status-dot"></span>
+            <span id="statusText">Camera inactive</span>
+        </div>
+
+        <div class="progress-section">
+            <div class="progress-track">
+                <div
+                    id="progressBar"
+                    class="progress-bar"
+                ></div>
+            </div>
+
+            <p id="progressText" class="progress-text">
+                0.0 s / 2.0 s
+            </p>
+        </div>
+
+        <div id="videoContainer" class="video-container hidden">
+            <div class="camera-wrapper">
+                <video
+                id="webcam"
+                autoplay
+                muted
+                playsinline
+                disablepictureinpicture
+                disableremoteplayback
+            ></video>
+
+                <canvas id="overlay"></canvas>
+            </div>
+
+            <div class="legend">
+                <div>
+                    <span class="legend-line face-line"></span>
+                    Face detected
+                </div>
+
+                <div>
+                    <span class="legend-line hair-line"></span>
+                    Hair zone
+                </div>
+
+                <div>
+                    <span class="legend-circle hand-circle"></span>
+                    Hand detected
+                </div>
+
+                <div>
+                    <span class="legend-circle alert-circle"></span>
+                    Hand in hair zone
+                </div>
+            </div>
+        </div>
+
+        <section class="information">
+            <h2>How it works</h2>
+
+            <p>
+                If a hand stays inside the hair zone for more
+                than 2 seconds, a sound alert starts.
+            </p>
+
+            <p>
+                A new beep is played every second until both
+                hands leave the hair zone.
+            </p>
+        </section>
+
+        <div class="buttons">
+            <button id="startButton">
+                Start camera
+            </button>
+
+            <button id="toggleVideoButton" disabled>
+                Show camera
+            </button>
+
+            <button id="stopButton" disabled>
+                Stop
+            </button>
+        </div>
+
+        <p id="errorMessage" class="error"></p>
+    </main>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
