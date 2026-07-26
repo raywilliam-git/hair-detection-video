@@ -2,7 +2,7 @@
 
 A simple web application that gently reminds you when your hand stays in your hair for several seconds.
 
-The goal is to help increase awareness of repetitive hair-touching habits.
+The goal is to increase awareness of repetitive hair-pulling or hair-touching behaviors. It may be helpful for people living with trichotillomania.
 
 ## How to use
 
