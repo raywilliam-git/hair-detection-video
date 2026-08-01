@@ -99,6 +99,17 @@ const summarySessionRange =
         "summarySessionRange"
     );
 
+
+const soundSelect =
+    document.getElementById(
+        "soundSelect"
+    );
+
+const previewSoundButton =
+    document.getElementById(
+        "previewSoundButton"
+    );
+
 let cameraStream = null;
 let videoVisible = false;
 
@@ -1134,6 +1145,39 @@ startButton.addEventListener(
             );
         }
         await startCamera();
+    }
+);
+
+soundSelect.addEventListener(
+    "change",
+    () => {
+
+        beepAudio.src =
+            `assets/sounds/${soundSelect.value}`;
+
+    }
+);
+
+previewSoundButton.addEventListener(
+    "click",
+    async () => {
+
+        try {
+
+            beepAudio.pause();
+
+            beepAudio.currentTime = 0;
+
+            await beepAudio.play();
+
+        }
+
+        catch(error) {
+
+            console.warn(error);
+
+        }
+
     }
 );
 

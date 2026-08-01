@@ -480,3 +480,63 @@ button:disabled {
     font-weight: normal;
     color: #7b8794;
 }
+
+.sound-setting {
+    margin: 18px 0;
+    padding: 14px 18px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+
+    background: #f4f6f8;
+    border-radius: 12px;
+}
+
+.sound-setting label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #364152;
+}
+
+.sound-setting-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sound-setting select {
+    min-width: 150px;
+    padding: 10px 12px;
+
+    border: 1px solid #d5dbe1;
+    border-radius: 8px;
+
+    font-size: 15px;
+    background: white;
+}
+
+#previewSoundButton {
+    padding: 10px 16px;
+
+    color: #1f2933;
+    background: #e3e7eb;
+}
+
+
+@media (max-width: 600px) {
+    .sound-setting {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .sound-setting-controls {
+        width: 100%;
+    }
+
+    .sound-setting select {
+        flex: 1;
+        min-width: 0;
+    }
+}
