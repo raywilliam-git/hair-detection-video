@@ -150,14 +150,11 @@ async function startCamera() {
 
     try {
         startButton.disabled = true;
+        
 
         await initializeAudio();
 
-        /*
-         * Temporary iPhone sound test.
-         * This happens before loading MediaPipe
-         * and before requesting the camera.
-         */
+        console.log(audioContext.state);
         playBeep();
 
         if (!faceLandmarker || !handLandmarker) {
