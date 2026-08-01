@@ -151,16 +151,18 @@ async function startCamera() {
     try {
         startButton.disabled = true;
 
-        /*
-         * The button click acts as the required
-         * user interaction for browser audio.
-         */
         await initializeAudio();
+
+        /*
+         * Temporary iPhone sound test.
+         * This happens before loading MediaPipe
+         * and before requesting the camera.
+         */
+        playBeep();
 
         if (!faceLandmarker || !handLandmarker) {
             await initializeModels();
         }
-
         cameraStream =
             await navigator.mediaDevices.getUserMedia({
                 video: {
