@@ -16,19 +16,6 @@
 <body>
 
 
-    <div
-            style="
-                background:red;
-                color:white;
-                padding:12px;
-                font-size:24px;
-                text-align:center;
-                font-weight:bold;
-            "
-        >
-            LISA TO YURA FIGHTTTT
-        </div>
-
     <main class="container">
         <h1>Hair Touch Reminder</h1>
 
@@ -54,6 +41,14 @@
             <p id="progressText" class="progress-text">
                 0.0 s / 2.0 s
             </p>
+        </div>
+
+        <div id="streakSection" class="streak-section hidden">
+            <span class="streak-label">No reminder for</span>
+
+            <strong id="streakTime">
+                00:00
+            </strong>
         </div>
 
         <div id="videoContainer" class="video-container hidden">
@@ -123,6 +118,70 @@
 
         <p id="errorMessage" class="error"></p>
     </main>
+
+
+    <div id="summaryModal" class="summary-modal hidden">
+        <div class="summary-card">
+            <h2>Session summary</h2>
+
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <span>Session duration</span>
+                    <strong id="summaryDuration">—</strong>
+                    <small id="summarySessionRange">
+                        —
+                    </small>
+                </div>
+
+                <div class="summary-item">
+                    <span>Total reminders</span>
+                    <strong id="summaryTotal">—</strong>
+                </div>
+
+                <div class="summary-item">
+                    <span>Most active hour</span>
+                    <strong id="summaryMostActiveHour">—</strong>
+                </div>
+
+                <div class="summary-item">
+                    <span>Longest reminder-free period</span>
+                    <strong id="summaryLongestPeriod">—</strong>
+                </div>
+
+                <div class="summary-item">
+                    <span>Average time between reminders</span>
+                    <strong id="summaryAverageInterval">—</strong>
+                </div>
+
+                <div class="summary-item">
+                    <span>Reminders per hour</span>
+                    <strong id="summaryRate">—</strong>
+                </div>
+            </div>
+            <div class="summary-chart-section">
+                <h3>Events by hour</h3>
+
+                <div
+                    id="summaryHourlyChart"
+                    class="summary-hourly-chart"
+                ></div>
+            </div>
+
+            <p class="download-hint">
+                For more details, download the session report.
+            </p>
+
+            <div class="summary-buttons">
+                <button id="downloadReportButton">
+                    Download report
+                </button>
+
+                <button id="closeSummaryButton">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
 
     <audio
         id="beepAudio"
