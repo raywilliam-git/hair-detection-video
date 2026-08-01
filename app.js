@@ -150,16 +150,17 @@ async function startCamera() {
 
     try {
         startButton.disabled = true;
-        
 
+        /*
+         * The button click acts as the required
+         * user interaction for browser audio.
+         */
         await initializeAudio();
-
-        console.log(audioContext.state);
-        playBeep();
 
         if (!faceLandmarker || !handLandmarker) {
             await initializeModels();
         }
+
         cameraStream =
             await navigator.mediaDevices.getUserMedia({
                 video: {
@@ -598,7 +599,7 @@ function playBeep() {
 
     oscillator.type = "sine";
     oscillator.frequency.setValueAtTime(
-        760,
+        1200,
         startTime
     );
 
@@ -612,8 +613,8 @@ function playBeep() {
     );
 
     gain.gain.exponentialRampToValueAtTime(
-        0.7,
-        startTime + 0.015
+        1.5,
+        startTime + 0.03
     );
 
     gain.gain.exponentialRampToValueAtTime(
