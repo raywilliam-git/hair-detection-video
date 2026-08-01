@@ -40,6 +40,12 @@ const progressBar =
 const progressText =
     document.getElementById("progressText");
 
+
+const beepAudio =
+    document.getElementById("beepAudio");
+    
+beepAudio.volume = 1;
+
 let cameraStream = null;
 let videoVisible = false;
 
@@ -51,14 +57,7 @@ let detectionTimer = null;
 
 let currentHairZone = null;
 
-/*
- * Audio state
- */
-let audioContext = null;
 
-/*
- * Contact and alert state
- */
 let contactStartTime = null;
 let lastBeepTime = null;
 let alertActive = false;
@@ -125,37 +124,12 @@ async function initializeModels() {
         );
 }
 
-async function initializeAudio() {
-    const AudioContextClass =
-        window.AudioContext ||
-        window.webkitAudioContext;
-
-    if (!AudioContextClass) {
-        throw new Error(
-            "Web Audio is not supported by this browser."
-        );
-    }
-
-    if (!audioContext) {
-        audioContext = new AudioContextClass();
-    }
-
-    if (audioContext.state === "suspended") {
-        await audioContext.resume();
-    }
-}
 
 async function startCamera() {
     errorMessage.textContent = "";
 
     try {
         startButton.disabled = true;
-
-        /*
-         * The button click acts as the required
-         * user interaction for browser audio.
-         */
-        await initializeAudio();
 
         if (!faceLandmarker || !handLandmarker) {
             await initializeModels();
@@ -171,6 +145,7 @@ async function startCamera() {
                     height: {
                         ideal: 480
                     },
+
                     frameRate: {
                         ideal: 15,
                         max: 15
@@ -204,7 +179,6 @@ async function startCamera() {
             "Hide camera";
 
         detectionRunning = true;
-        
 
         resetContactState();
 
@@ -215,8 +189,9 @@ async function startCamera() {
         statusText.textContent = "Error";
 
         errorMessage.textContent =
-            "The camera or detection models could not start. " +
-            "Open the browser console with F12 for details.";
+            `${error.name || "Error"}: ${
+                error.message || String(error)
+            }`;
 
         startButton.disabled = false;
     }
@@ -577,58 +552,23 @@ function resetContactState() {
     statusDot.classList.remove("warning");
 }
 
-function playBeep() {
-    if (
-        !audioContext ||
-        audioContext.state !== "running"
-    ) {
-        return;
+async function playBeep() {
+    try {
+        /*
+         * Restart the sound from the beginning,
+         * even if it was already playing.
+         */
+        beepAudio.pause();
+        beepAudio.currentTime = 0;
+
+        await beepAudio.play();
+    } catch (error) {
+        console.warn(
+            "Unable to play reminder sound:",
+            error
+        );
     }
-
-    const oscillator =
-        audioContext.createOscillator();
-
-    const gain =
-        audioContext.createGain();
-
-    const startTime =
-        audioContext.currentTime;
-
-    const endTime =
-        startTime + 0.16;
-
-    oscillator.type = "sine";
-    oscillator.frequency.setValueAtTime(
-        1200,
-        startTime
-    );
-
-    /*
-     * Short fade-in and fade-out avoids
-     * an unpleasant audio click.
-     */
-    gain.gain.setValueAtTime(
-        0.0001,
-        startTime
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-        1.5,
-        startTime + 0.03
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-        0.0001,
-        endTime
-    );
-
-    oscillator.connect(gain);
-    gain.connect(audioContext.destination);
-
-    oscillator.start(startTime);
-    oscillator.stop(endTime);
 }
-
 function drawFaceRectangle(face) {
     const x =
         face.left * overlay.width;
@@ -838,7 +778,21 @@ function stopCamera() {
 
 startButton.addEventListener(
     "click",
-    startCamera
+    async () => {
+        try {
+            beepAudio.currentTime = 0;
+            await beepAudio.play();
+
+            beepAudio.pause();
+            beepAudio.currentTime = 0;
+        } catch (audioError) {
+            console.warn(
+                "Audio could not be enabled:",
+                audioError
+            );
+        }
+        await startCamera();
+    }
 );
 
 toggleVideoButton.addEventListener(
