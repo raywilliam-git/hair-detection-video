@@ -43,6 +43,14 @@
             </p>
         </div>
 
+        <div id="streakSection" class="streak-section hidden">
+            <span class="streak-label">No reminder for</span>
+
+            <strong id="streakTime">
+                00:00
+            </strong>
+        </div>
+
         <div id="videoContainer" class="video-container hidden">
             <div class="camera-wrapper">
                 <video
@@ -94,6 +102,42 @@
             </p>
         </section>
 
+
+
+        <div class="sound-setting">
+            <label for="soundSelect">
+                Reminder sound
+            </label>
+
+            <div class="sound-setting-controls">
+                <select id="soundSelect">
+                    <option value="ringtone.wav">
+                        Ringtone
+                    </option>
+
+                    <option value="retrogame.wav">
+                        Retro Game
+                    </option>
+
+                    <option value="whistle.wav">
+                        Whistle
+                    
+                    </option>
+
+                    <option value="rooster.wav">
+                        Rooster
+                    </option>
+                </select>
+
+                <button
+                    id="previewSoundButton"
+                    type="button"
+                >
+                    Play
+                </button>
+            </div>
+        </div>
+
         <div class="buttons">
             <button id="startButton">
                 Start camera
@@ -110,6 +154,70 @@
 
         <p id="errorMessage" class="error"></p>
     </main>
+
+
+    <div id="summaryModal" class="summary-modal hidden">
+        <div class="summary-card">
+            <h2>Session summary</h2>
+
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <span>Session duration</span>
+                    <strong id="summaryDuration">—</strong>
+                    <small id="summarySessionRange">
+                        —
+                    </small>
+                </div>
+
+                <div class="summary-item">
+                    <span>Total reminders</span>
+                    <strong id="summaryTotal">—</strong>
+                </div>
+
+                <div class="summary-item">
+                    <span>Most active hour</span>
+                    <strong id="summaryMostActiveHour">—</strong>
+                </div>
+
+                <div class="summary-item">
+                    <span>Longest reminder-free period</span>
+                    <strong id="summaryLongestPeriod">—</strong>
+                </div>
+
+                <div class="summary-item">
+                    <span>Average time between reminders</span>
+                    <strong id="summaryAverageInterval">—</strong>
+                </div>
+
+                <div class="summary-item">
+                    <span>Reminders per hour</span>
+                    <strong id="summaryRate">—</strong>
+                </div>
+            </div>
+            <div class="summary-chart-section">
+                <h3>Events by hour</h3>
+
+                <div
+                    id="summaryHourlyChart"
+                    class="summary-hourly-chart"
+                ></div>
+            </div>
+
+            <p class="download-hint">
+                For more details, download the session report.
+            </p>
+
+            <div class="summary-buttons">
+                <button id="downloadReportButton">
+                    Download report
+                </button>
+
+                <button id="closeSummaryButton">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
 
     <audio
         id="beepAudio"
